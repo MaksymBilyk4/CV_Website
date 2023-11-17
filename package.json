@@ -1,11 +1,12 @@
 {
   "name": "cv_website",
   "version": "1.0.0",
-  "description": "Maksym`s Bilyk CV website",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Mkasym Bilyk <maksym.bilyk.business@gmail.com>",
+  "keywords": [],
+  "author": "",
   "license": "ISC"
 }
