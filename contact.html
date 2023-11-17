@@ -117,7 +117,7 @@
             <!-- Left Side Ends -->
             <!-- Contact Form Starts -->
             <div class="col-12 col-lg-8">
-                <form class="contactform" method="post" id="form">
+                <form class="contactform" method="post" id="tg_form">
                     <div class="contactform">
                         <div class="row">
                             <div class="col-12 col-md-4">
@@ -136,9 +136,9 @@
                                     <span class="button-icon fa fa-send"></span>
                                 </button>
                             </div>
-                            <div class="col-12 form-message">
-                                <span class="output_message text-center font-weight-600 text-uppercase"></span>
-                            </div>
+<!--                            <div class="col-12 form-message">-->
+<!--                                <span class="output_message text-center font-weight-600 text-uppercase"></span>-->
+<!--                            </div>-->
                         </div>
                     </div>
                 </form>
@@ -160,6 +160,38 @@
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/custom.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+    const form = document.getElementById("tg_form");
+
+    const TOKEN = "6882359536:AAERAkPZQR6z9ysaW7k2Eufa_kdDzFFmYTo";
+    const CHAT_ID = "-1002080145896";
+    const URL_API = `https://api.telegram.org/bot${ TOKEN }/sendMessage`;
+
+    form.addEventListener("submit", e => {
+        const name = document.getElementById("nameInput");
+        const email = document.getElementById("emailInput");
+        const subject = document.getElementById("subjectInput");
+        const message = document.getElementById("messageInput");
+        e.preventDefault();
+
+        let chatMessage = `<b>Новая заявка с сайта CV Portfolio!</b>\n`;
+        chatMessage+="------------------------------------------------------------\n";
+        chatMessage += `<b><i>Username ---> ${name?.value || "empty"}</i></b>\n`;
+        chatMessage += `<b><i>Email ---> ${email?.value || "empty"}</i></b>\n`;
+        chatMessage += `<b>Subject: <i>${subject?.value || "empty"}</i></b>\n`;
+        chatMessage += `<b>message:</b>\n${message?.value || "empty"}`;
+        console.log(chatMessage)
+
+
+        axios.post(URL_API, {
+            chat_id: CHAT_ID,
+            parse_mode: 'html',
+            text: chatMessage
+        })
+    });
+</script>
 
 </body>
 
