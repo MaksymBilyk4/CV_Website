@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Contact - Tunis Personal Portfolio</title>
+    <title>Contact - Maksym Bilyk. Personal Web Site</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Template Google Fonts -->
@@ -42,12 +42,12 @@
                 <h2>About</h2>
             </a>
         </li>
-        <li class="icon-box">
-            <i class="fa fa-briefcase"></i>
-            <a href="portfolio.html">
-                <h2>Portfolio</h2>
-            </a>
-        </li>
+<!--        <li class="icon-box">-->
+<!--            <i class="fa fa-briefcase"></i>-->
+<!--            <a href="portfolio.html">-->
+<!--                <h2>Portfolio</h2>-->
+<!--            </a>-->
+<!--        </li>-->
         <li class="icon-box active">
             <i class="fa fa-envelope-open"></i>
             <a href="contact.html">
@@ -72,7 +72,7 @@
             <ul class="list-unstyled" id="menu">
                 <li><a href="index.html"><i class="fa fa-home"></i><span>Home</span></a></li>
                 <li><a href="about.html"><i class="fa fa-user"></i><span>About</span></a></li>
-                <li><a href="portfolio.html"><i class="fa fa-folder-open"></i><span>Portfolio</span></a></li>
+<!--                <li><a href="portfolio.html"><i class="fa fa-folder-open"></i><span>Portfolio</span></a></li>-->
                 <li class="active"><a href="contact.html"><i class="fa fa-envelope-open"></i><span>Contact</span></a></li>
 <!--                <li><a href="blog.html"><i class="fa fa-comments"></i><span>Blog</span></a></li>-->
             </ul>
@@ -136,9 +136,9 @@
                                     <span class="button-icon fa fa-send"></span>
                                 </button>
                             </div>
-<!--                            <div class="col-12 form-message">-->
-<!--                                <span class="output_message text-center font-weight-600 text-uppercase"></span>-->
-<!--                            </div>-->
+                            <div class="col-12" id="form-msg-result" style="display: none">
+                                <span class="form-message-result-text">message</span>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -168,6 +168,7 @@
     const TOKEN = "6882359536:AAERAkPZQR6z9ysaW7k2Eufa_kdDzFFmYTo";
     const CHAT_ID = "-1002080145896";
     const URL_API = `https://api.telegram.org/bot${ TOKEN }/sendMessage`;
+    let finalPopupMessage = document.getElementById("form-msg-result");
 
     form.addEventListener("submit", e => {
         const name = document.getElementById("nameInput");
@@ -176,12 +177,12 @@
         const message = document.getElementById("messageInput");
         e.preventDefault();
 
-        let chatMessage = `<b>Новая заявка с сайта CV Portfolio!</b>\n`;
+        let chatMessage = `<b>Уведомление с сайта (фидбек форма)</b>\n`;
         chatMessage+="------------------------------------------------------------\n";
         chatMessage += `<b><i>Username ---> ${name?.value || "empty"}</i></b>\n`;
         chatMessage += `<b><i>Email ---> ${email?.value || "empty"}</i></b>\n`;
         chatMessage += `<b>Subject: <i>${subject?.value || "empty"}</i></b>\n`;
-        chatMessage += `<b>message:</b>\n${message?.value || "empty"}`;
+        chatMessage += `<b>MESSAGE:</b>\n${message?.value || "empty"}`;
         console.log(chatMessage)
 
 
@@ -189,7 +190,21 @@
             chat_id: CHAT_ID,
             parse_mode: 'html',
             text: chatMessage
-        })
+        }).then((res) => {
+            finalPopupMessage.innerText = `Thank you for your appeal, ${name.value}. I will contact you as soon as it will be possible. Have a good day!`;
+            name.value = "";
+            email.value = "";
+            subject.value = "";
+            message.value = "";
+            finalPopupMessage.style.display = "block"
+            finalPopupMessage.style.backgroundColor = "#7cb305";
+        }).catch((err) => {
+            console.warn(err);
+            finalPopupMessage.style.display = "block"
+            finalPopupMessage.style.backgroundColor = "#dc3545";
+            finalPopupMessage.innerText = "Ooooops... Something went wrong";
+
+        }).finally(() => console.log("End"))
     });
 </script>
 

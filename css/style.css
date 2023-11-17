@@ -1766,3 +1766,11 @@ body.light hr.separator {
     margin-top: 35px !important;
   }
 }
+
+#form-msg-result{
+  margin: 15px;
+  padding: 15px;
+  border-radius: 40px;
+  width: 100%;
+  text-align: center;
+}
